@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import "./App.css";
-import Search from "./components/Search";
-import Table from "./components/Table";
-import Button from "./components/Button";
+import Search from "./components/Search/Search";
+import Table from "./components/Table/Table";
+import Button from "./components/Button/Button";
 
 import {
   DEFAULT_QUERY,
