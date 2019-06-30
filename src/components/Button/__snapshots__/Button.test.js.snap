@@ -3,6 +3,7 @@
 exports[`Button should have valid snapshot 1`] = `
 <button
   className=""
+  onClick={[Function]}
   type="button"
 >
   Do Somethings

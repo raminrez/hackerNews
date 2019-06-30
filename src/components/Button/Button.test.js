@@ -7,12 +7,14 @@ import Button from "./Button";
 describe("Button", () => {
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<Button>Do Somethings</Button>, div);
+    ReactDOM.render(<Button onClick={() => null}>Do Somethings</Button>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   test("should have valid snapshot", () => {
-    const component = renderer.create(<Button>Do Somethings</Button>);
+    const component = renderer.create(
+      <Button onClick={() => null}>Do Somethings</Button>
+    );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
