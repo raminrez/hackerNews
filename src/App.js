@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import "./App.css";
 import Search from "./components/Search";
 import Table from "./components/Table";
@@ -14,6 +16,7 @@ const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
 
 class App extends Component {
+  _isMount = false;
   constructor() {
     super();
     this.state = {
@@ -49,12 +52,11 @@ class App extends Component {
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
-    fetch(
+    axios(
       `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
     )
-      .then(response => response.json())
-      .then(result => this.setSearchTopStories(result))
-      .catch(error => this.setState({ error }));
+      .then(result => this._isMount && this.setSearchTopStories(result.data))
+      .catch(error => this._isMount && this.setState({ error }));
   }
 
   setSearchTopStories(result) {
@@ -93,10 +95,15 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this._isMount = true;
     const { searchTerm } = this.state;
     this.setState({ searchKey: searchTerm });
     this.fetchSearchTopStories(searchTerm); //fetch on default values
   }
+
+  componentWillUnmount = () => {
+    this._isMount = false;
+  };
 
   render() {
     const { searchTerm, results, searchKey, error } = this.state;
