@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function Search({ value, onChange, children, onSubmit }) {
   return (
@@ -8,3 +9,10 @@ export default function Search({ value, onChange, children, onSubmit }) {
     </form>
   );
 }
+
+Search.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  children: PropTypes.node.isRequired,
+  onSubmit: PropTypes.func
+};
