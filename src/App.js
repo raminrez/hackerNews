@@ -25,7 +25,9 @@ class App extends Component {
       searchKey: "",
       searchTerm: DEFAULT_QUERY,
       error: null,
-      isLoading: false
+      isLoading: false,
+      sortKey: "NONE",
+      isSortReverse: false
     };
 
     this.onDismiss = this.onDismiss.bind(this);
@@ -34,6 +36,7 @@ class App extends Component {
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
+    this.onSort = this.onSort.bind(this);
   }
 
   /**
@@ -42,6 +45,12 @@ class App extends Component {
 
   needsToSearchTopStories(searchTerm) {
     return !this.state.results[searchTerm];
+  }
+
+  onSort(sortKey) {
+    const isSortReverse =
+      this.state.sortKey === sortKey && !this.state.isSortReverse;
+    this.setState({ sortKey, isSortReverse });
   }
 
   onSearchSubmit(event) {
@@ -110,7 +119,15 @@ class App extends Component {
   };
 
   render() {
-    const { searchTerm, results, searchKey, error, isLoading } = this.state;
+    const {
+      searchTerm,
+      results,
+      searchKey,
+      error,
+      isLoading,
+      sortKey,
+      isSortReverse
+    } = this.state;
     const page =
       (results && results[searchKey] && results[searchKey].page) || 0; //check current page value
 
@@ -131,7 +148,13 @@ class App extends Component {
         {error ? (
           <p>Something went wrong.</p>
         ) : (
-          list && <Table onDismiss={this.onDismiss} list={list} />
+          <TableWithData
+            isSortReverse={isSortReverse}
+            sortKey={sortKey}
+            onSort={this.onSort}
+            onDismiss={this.onDismiss}
+            list={list}
+          />
         )}
         <div className="interactions">
           <ButtonWithLoading
@@ -153,5 +176,11 @@ const ButtonWithLoading = withLoading(Button);
 const Loading = () => {
   return <div>Loading ...</div>;
 };
+
+const withData = Component => ({ ...props }) => {
+  return props.list.length ? <Component {...props} /> : null;
+};
+
+const TableWithData = withData(Table);
 
 export default App;
