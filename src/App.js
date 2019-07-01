@@ -134,20 +134,21 @@ class App extends Component {
           list && <Table onDismiss={this.onDismiss} list={list} />
         )}
         <div className="interactions">
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Button
-              onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
-            >
-              More
-            </Button>
-          )}
+          <ButtonWithLoading
+            isLoading={isLoading}
+            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
+          >
+            More
+          </ButtonWithLoading>
         </div>
       </div>
     );
   }
 }
+const withLoading = Component => ({ isLoading, ...rest }) =>
+  isLoading ? <Loading /> : <Component {...rest} />;
+
+const ButtonWithLoading = withLoading(Button);
 
 const Loading = () => {
   return <div>Loading ...</div>;
