@@ -1,4 +1,4 @@
-export const DEFAULT_QUERY = "redux";
+export const DEFAULT_QUERY = "react";
 export const DEFAULT_HPP = "5";
 
 export const PATH_BASE = "https://hn.algolia.com/api/v1";
