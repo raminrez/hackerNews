@@ -29,9 +29,12 @@ export default class Table extends Component {
   }
 
   onSort(sortKey) {
-    const isSortReverse =
-      this.state.sortKey === sortKey && !this.state.isSortReverse;
-    this.setState({ sortKey, isSortReverse });
+    this.setState(prevState => {
+      return {
+        sortKey,
+        isSortReverse: prevState.sortKey === sortKey && !prevState.isSortReverse
+      };
+    });
   }
 
   render() {

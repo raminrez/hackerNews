@@ -15,9 +15,7 @@ describe("Table", () => {
     ],
     onDismiss: () => {
       console.log("Function Works");
-    },
-    sortKey: "TITLE",
-    isSortReverse: false
+    }
   };
 
   it("render without crash", () => {
