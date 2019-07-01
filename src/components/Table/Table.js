@@ -11,6 +11,9 @@ const style = {
   smallColumn: { width: "10%" }
 };
 
+/**
+ * define sort behaviors
+ */
 const SORTS = {
   NONE: list => list,
   TITLE: list => sortBy(list, "title"),
@@ -22,9 +25,10 @@ const SORTS = {
 export default class Table extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { sortKey: "NONE", isSortReverse: false };
-
+    this.state = {
+      sortKey: "NONE",
+      isSortReverse: false
+    };
     this.onSort = this.onSort.bind(this);
   }
 
@@ -32,7 +36,7 @@ export default class Table extends Component {
     this.setState(prevState => {
       return {
         sortKey,
-        isSortReverse: prevState.sortKey === sortKey && !prevState.isSortReverse
+        isSortReverse: prevState.sortKey === sortKey && !prevState.isSortReverse //check if clicked twice reverse sort status
       };
     });
   }
@@ -109,6 +113,7 @@ export default class Table extends Component {
 }
 
 const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
+  //concat multiple classNames and detect current active sort role
   const sortClass = classnames("button-inline", {
     "button-active": sortKey === activeSortKey
   });
@@ -118,6 +123,13 @@ const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
       {children}
     </Button>
   );
+};
+
+Sort.propTypes = {
+  sortKey: PropTypes.string.isRequired,
+  onSort: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  activeSortKey: PropTypes.string.isRequired
 };
 
 Table.propTypes = {

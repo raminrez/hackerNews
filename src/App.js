@@ -29,8 +29,11 @@ const updateSearchTopStoriesState = (hits, page) => prevState => {
   };
 };
 
+/**
+ * @todo write all sides test for components
+ */
 class App extends Component {
-  _isMount = false;
+  _isMount = false; // check mount status for managing http requests and prevent send requests on unMounted lifecycle
   constructor() {
     super();
     this.state = {
@@ -53,6 +56,11 @@ class App extends Component {
    * @param {Object} result get fetchet data and check old values then set in state
    */
 
+  /**
+   * check if already don't have data in state
+   * @param {String} searchTerm
+   * @returns {boolean}
+   */
   needsToSearchTopStories(searchTerm) {
     return !this.state.results[searchTerm];
   }
@@ -80,6 +88,10 @@ class App extends Component {
     this.setState(updateSearchTopStoriesState(hits, page));
   }
 
+  /**
+   * remove passed id from results in state
+   * @param {String} id selected row id
+   */
   onDismiss(id) {
     this.setState(prevState => {
       const { searchKey, results } = prevState;
@@ -107,7 +119,7 @@ class App extends Component {
   }
 
   componentWillUnmount = () => {
-    this._isMount = false;
+    this._isMount = false; //its prevent unnecessary http requests in unMounted state
   };
 
   render() {
