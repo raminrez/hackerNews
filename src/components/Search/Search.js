@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class Search extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
+  /**
+   * @todo Remove TEMP CODE //TEMP
+   */
   componentDidMount() {
     if (this.input) {
-      this.input.focus();
+      this.input.focus(); //TEMP
     }
   }
 
@@ -17,7 +20,7 @@ export default class Search extends Component {
     return (
       <form onSubmit={onSubmit}>
         <input
-          ref={node => (this.input = node)}
+          ref={node => (this.input = node)} //TEMP
           type="text"
           value={value}
           onChange={onChange}
